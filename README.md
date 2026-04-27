@@ -3,6 +3,9 @@
 ## Objective
 Analyze the relationship between total education spending and specific education expenses using regression models.
 
+## Project Overview
+This project performs a regression analysis on household education spending data to identify relationships between total spending and different categories of educational expenses.
+
 ## Dataset
 - Source: Household education expenditure dataset
 - Variables used:
@@ -34,7 +37,12 @@ Analyze the relationship between total education spending and specific education
 - Strong correlation in some variables (GTSR vs MCL)
 - Weak or negligible correlation in others (GTSNR vs MCL)
 
-The following plots illustrate the main relationships identified in the regression analysis.
+## Interpretation
+- Spending on regulated education services shows a strong linear relationship with tuition expenses.
+- Non-regulated services display weak correlation, suggesting different spending behavior.
+- Total education spending moderately explains variation in other study-related expenses.
+
+## Visual Results
 
 ### Other Studies vs Total Spending
 ![Other Studies vs Total Spending](other_studies_vs_total_spending.png)
