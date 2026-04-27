@@ -45,16 +45,16 @@ This project performs a regression analysis on household education spending data
 ## Visual Results
 
 ### Other Studies vs Total Spending
-![Other Studies vs Total Spending](other_studies_vs_total_spending.png)
+![Other Studies vs Total Spending](outputs/other_studies_vs_total_spending.png)
 
 ### Regulated Services vs Tuition
-![Regulated Services vs Tuition](regulated_vs_tuition.png)
+![Regulated Services vs Tuition](outputs/regulated_vs_tuition.png)
 
 ### Non-Regulated Services vs Tuition
-![Non-Regulated Services vs Tuition](non_regulated_vs_tuition.png)
+![Non-Regulated Services vs Tuition](outputs/non_regulated_vs_tuition.png)
 
 ### Regulated Services by Education Type
-![Regulated Services by Education Type](regulated_by_education_type.png)
+![Regulated Services by Education Type](outputs/regulated_by_education_type.png)
 
 ## Author
 Pol Serra Pozas
