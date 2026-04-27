@@ -34,5 +34,19 @@ Analyze the relationship between total education spending and specific education
 - Strong correlation in some variables (GTSR vs MCL)
 - Weak or negligible correlation in others (GTSNR vs MCL)
 
+The following plots illustrate the main relationships identified in the regression analysis.
+
+### Other Studies vs Total Spending
+![Other Studies vs Total Spending](other_studies_vs_total_spending.png)
+
+### Regulated Services vs Tuition
+![Regulated Services vs Tuition](regulated_vs_tuition.png)
+
+### Non-Regulated Services vs Tuition
+![Non-Regulated Services vs Tuition](non_regulated_vs_tuition.png)
+
+### Regulated Services by Education Type
+![Regulated Services by Education Type](regulated_by_education_type.png)
+
 ## Author
 Pol Serra Pozas
