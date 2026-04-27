@@ -14,24 +14,29 @@ education_data <- read_csv("GastoHogaresEduc.csv")
 education_data <- data.frame(education_data)
 
 
-# 3. Data filtering --------------------------------------------------------
+# 3. Create outputs folder -------------------------------------------------
 
-# Keep households with positive total education spending
+dir.create("outputs", showWarnings = FALSE)
+
+
+# 4. Data filtering --------------------------------------------------------
+
 education_spending <- subset(
   education_data,
   GTT > 0 & !is.na(GTT)
 )
 
-# Keep valid observations for the relationship between C34A and GTT
 other_studies_data <- subset(
   education_spending,
   !is.na(C34A)
 )
 
 
-# 4. Relationship between other studies and total education spending --------
+# 5. Other studies vs total education spending -----------------------------
 
 model_other_studies <- lm(C34A ~ GTT, data = other_studies_data)
+
+png("outputs/other_studies_vs_total_spending.png", width = 1000, height = 700)
 
 plot(
   C34A ~ GTT,
@@ -42,6 +47,8 @@ plot(
 )
 
 abline(model_other_studies, col = "red", lwd = 2)
+
+dev.off()
 
 summary(model_other_studies)
 
@@ -54,12 +61,12 @@ r2_other_studies <- cor(
 print(r2_other_studies)
 
 
-# 5. Regulated and non-regulated education services ------------------------
+# 6. Regulated and non-regulated education services ------------------------
 
 model_regulated <- lm(GTSR ~ MCL, data = education_data)
 model_non_regulated <- lm(GTSNR ~ MCL, data = education_data)
 
-par(mfrow = c(1, 2))
+png("outputs/regulated_vs_tuition.png", width = 1000, height = 700)
 
 plot(
   GTSR ~ MCL,
@@ -71,6 +78,11 @@ plot(
 
 abline(model_regulated, col = "red", lwd = 2)
 
+dev.off()
+
+
+png("outputs/non_regulated_vs_tuition.png", width = 1000, height = 700)
+
 plot(
   GTSNR ~ MCL,
   data = education_data,
@@ -80,6 +92,9 @@ plot(
 )
 
 abline(model_non_regulated, col = "red", lwd = 2)
+
+dev.off()
+
 
 r2_regulated <- cor(
   education_data$GTSR,
@@ -96,13 +111,8 @@ r2_non_regulated <- cor(
 print(r2_regulated)
 print(r2_non_regulated)
 
-# Interpretation:
-# The relationship between GTSNR and MCL is very weak.
-# The relationship between GTSR and MCL is much stronger, suggesting that
-# tuition spending is a better predictor of regulated education services.
 
-
-# 6. Prediction of regulated education services ----------------------------
+# 7. Prediction of regulated education services ----------------------------
 
 tuition_values <- data.frame(
   MCL = c(200, 525, 735, 995, 1350)
@@ -116,21 +126,27 @@ predicted_regulated_spending <- predict(
 print(predicted_regulated_spending)
 
 
-# 7. Relationship by type of education -------------------------------------
+# 8. Relationship by type of education -------------------------------------
 
-xyplot(
-  GTSR ~ MCL,
-  groups = C01,
-  data = education_data,
-  main = "Regulated Education Services vs Tuition by Education Type",
-  xlab = "Tuition and classes spending (MCL)",
-  ylab = "Regulated education services (GTSR)",
-  auto.key = TRUE,
-  type = c("p", "r")
+png("outputs/regulated_by_education_type.png", width = 1000, height = 700)
+
+print(
+  xyplot(
+    GTSR ~ MCL,
+    groups = C01,
+    data = education_data,
+    main = "Regulated Education Services vs Tuition by Education Type",
+    xlab = "Tuition and classes spending (MCL)",
+    ylab = "Regulated education services (GTSR)",
+    auto.key = TRUE,
+    type = c("p", "r")
+  )
 )
 
+dev.off()
 
-# 8. Prediction for private education --------------------------------------
+
+# 9. Prediction for private education --------------------------------------
 
 models_by_education_type <- by(
   other_studies_data,
@@ -145,4 +161,15 @@ private_predictions <- predict(
   newdata = tuition_values
 )
 
+print(private_predictions)
+
+
+# 10. Summary of main results ----------------------------------------------
+
+cat("\nR2 - Other studies vs total spending:", round(r2_other_studies, 4))
+cat("\nR2 - Regulated services vs tuition:", round(r2_regulated, 4))
+cat("\nR2 - Non-regulated services vs tuition:", round(r2_non_regulated, 4))
+cat("\n\nPredictions for regulated education services:\n")
+print(predicted_regulated_spending)
+cat("\nPredictions for private education:\n")
 print(private_predictions)
